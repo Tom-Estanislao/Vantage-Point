@@ -1,0 +1,34 @@
+<div class="page-container">
+  <h2>Low-stock items reorder suggestions</h2>
+  <p>See items low in stock and their suggested reorder quantity.</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="check">Add to order</th>
+        <th>Stock item</th>
+        <th>Supplier</th>
+        <th class="num">In stock</th>
+        <th class="num">Reorder level</th>
+        <th class="num">Target level</th>
+        <th class="num">On order</th>
+        <th class="num">Suggested reorder</th>
+        <th class="num">Estimated cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (reorderItem of reorderList(); track $index) {
+        <tr>
+          <td class="check"><label class="hit"><input type="checkbox"></label></td>
+          <td>{{ reorderItem.name }}</td>
+          <td>{{ reorderItem.supplier }}</td>
+          <td class="num">{{ reorderItem.inStock }}</td>
+          <td class="num">{{ reorderItem.reorderLevel }}</td>
+          <td class="num">{{ reorderItem.targetLevel }}</td>
+          <td class="num">{{ reorderItem.onOrder }}</td>
+          <td class="num">{{ reorderItem.suggestedQuantity }}</td>
+          <td class="num">${{ reorderItem.estimatedCost.toFixed(2) }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
