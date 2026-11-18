@@ -1,3 +1,4 @@
+<app-supplier-list></app-supplier-list>
 <div class="page-container">
   <h2>Low-stock items reorder suggestions</h2>
   <p>See items low in stock and their suggested reorder quantity.</p>
@@ -18,7 +19,9 @@
     <tbody>
       @for (reorderItem of reorderList(); track $index) {
         <tr>
-          <td class="check"><label class="hit"><input type="checkbox"></label></td>
+          <td class="check">
+            <label class="hit"><input type="checkbox" /></label>
+          </td>
           <td>{{ reorderItem.name }}</td>
           <td>{{ reorderItem.supplier }}</td>
           <td class="num">{{ reorderItem.inStock }}</td>

@@ -1,0 +1,78 @@
+<div class="page-container">
+  <h2>Suppliers</h2>
+  <p>Choose a supplier to see low stock items and to create an order</p>
+
+  <!-- toggle to only show suppliers with items to restock, checked on screen 2 -->
+  <label class="restock-toggle">
+    <input type="checkbox" [checked]="screen === 2" />
+    Only show suppliers with items to restock
+  </label>
+
+  <!-- one card per supplier, shows name, category and delivery city -->
+  @for (supplier of suppliers(); track supplier.supplierId) {
+    <!-- on screen 2 (toggle on), only suppliers with items to restock are shown -->
+    @if (screen !== 2 || restockSupplierIds.includes(supplier.supplierId)) {
+      <!-- on screen 3, Fabrikam (4) turns blue because it is selected -->
+      <div class="supplier-card" [class.selected]="screen === 3 && supplier.supplierId === 4">
+        <div class="card-summary">
+          <!-- all cards share name="supplier", so only one can be picked -->
+          <!-- on screen 3, Fabrikam (4) is picked -->
+          <input type="radio" name="supplier" [checked]="screen === 3 && supplier.supplierId === 4" />
+
+          <div class="supplier-info">
+            <strong>{{ supplier.supplierName }}</strong><br />
+            {{ supplier.categoryName }} · {{ supplier.deliveryCity }}
+          </div>
+
+          <!-- orange label for suppliers with low stock items -->
+          @if (restockSupplierIds.includes(supplier.supplierId)) {
+            <span class="badge">Items to restock</span>
+          }
+
+          <!-- button says Hide details when the card is open -->
+          <button type="button" class="details-button">
+            @if (screen >= 3 && (supplier.supplierId === 4 || supplier.supplierId === 1)) {
+              Hide details
+            } @else {
+              Show details
+            }
+          </button>
+        </div>
+
+        <!-- on screen 3, A Datum (1) and Fabrikam (4) are expanded -->
+        <!-- A Datum shows its stock is above the reorder level, Fabrikam shows items at or below it -->
+        @if (screen >= 3 && (supplier.supplierId === 4 || supplier.supplierId === 1)) {
+          <div class="card-details">
+            <p><strong>Address:</strong>&nbsp;{{ supplier.deliveryAddressLine1 }}, {{ supplier.deliveryCity }}, {{ supplier.deliveryStateProvince }} {{ supplier.deliveryPostalCode }}</p>
+            <p><strong>Delivery method:</strong>&nbsp;{{ supplier.deliveryMethod }}</p>
+            <p><strong>Primary contact:</strong>&nbsp;{{ supplier.primaryContactName }}</p>
+            <p><strong>Phone:</strong>&nbsp;{{ supplier.phoneNumber }} &nbsp; <strong>Fax:</strong>&nbsp;{{ supplier.faxNumber }}</p>
+            <p><strong>Website:</strong>&nbsp;<a [href]="supplier.websiteUrl" target="_blank">{{ supplier.websiteUrl }}</a></p>
+
+            <!-- items list, already from highest to lowest unit price in the mock data -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Stock item</th>
+                  <th class="num">Unit price</th>
+                  <th class="num">In stock</th>
+                  <th class="num">Reorder level</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of supplier.stockItems; track item.stockItemId) {
+                  <tr>
+                    <td>{{ item.stockItemName }}</td>
+                    <td class="num">${{ item.unitPrice.toFixed(2) }}</td>
+                    <td class="num">{{ item.quantityOnHand }}</td>
+                    <td class="num">{{ item.reorderLevel }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>
