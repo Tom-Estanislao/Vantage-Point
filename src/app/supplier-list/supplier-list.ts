@@ -46,7 +46,7 @@ export class SupplierList {
    * 3 = A Datum and Fabrikam expanded to show their details and items,
    *     and Fabrikam selected with the radio button
    */
-  screen = 1;
+  screen = 3;
 
   //IDs of suppliers with low stock items in the mock data (Contoso = 2, Fabrikam = 4)
   restockSupplierIds = [2, 4];
