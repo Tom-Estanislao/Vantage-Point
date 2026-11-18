@@ -24,7 +24,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run build --if-present
+    - run: npm run build --if-present -- --base-href /Vantage-Point/
     - run: npm test
     - name: Upload Artifact
       uses: actions/upload-pages-artifact@v4
