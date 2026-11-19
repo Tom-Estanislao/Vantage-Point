@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SupplierList } from '../supplier-list/supplier-list';
+import { PurchaseOrder } from '../purchase-order/purchase-order';
 
 interface ReorderSuggestItemDTO {
   id: number;
@@ -14,7 +15,7 @@ interface ReorderSuggestItemDTO {
 }
 
 @Component({
-  imports: [SupplierList],
+  imports: [SupplierList, PurchaseOrder],
   selector: 'app-reorder-suggestion',
   styleUrl: './reorder-suggestion.css',
   templateUrl: './reorder-suggestion.html',

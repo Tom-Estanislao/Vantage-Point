@@ -1,0 +1,95 @@
+
+<div class="summary-bar">
+    @if (screen === 1) {
+        <span>No items selected. Check items from one supplier in the table to start an order.</span>
+        <button type="button" class="primary-button" disabled>Review Order</button>
+    } @else {
+        <span>
+            <strong>{{ order().supplierName }}</strong>: {{ order().lines.length }} items selected,
+            estimated total <strong>${{ orderTotal().toFixed(2) }}</strong>
+        </span>
+        <button type="button" class="primary-button">Review Order</button>
+    }
+</div>
+@if (screen >= 3) {
+    <div class="overlay">
+        <div class="dialog" role="dialog" aria-modal="true">
+            @if (screen === 3) {
+                <h2>Review Purchase Order</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Stock Item</th>
+                            <th class="num">Unit Price</th>
+                            <th class="num">Suggested Quantity</th>
+                            <th class="num">Order Quantity</th>
+                            <th class="num">Line Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (line of order().lines; track line.stockItemId) {
+                            <tr>
+                                <td>{{ line.stockItemName }}</td>
+                                <td class="num">${{ line.unitPrice.toFixed(2) }}</td>
+                                <td class="num">{{ line.suggestedQuantity }}</td>
+                                <td class="num">
+                                    <input 
+                                        type="number" 
+                                        class="qty-input" 
+                                        min="1" step="1" 
+                                        [value]="line.quantity" 
+                                        [attr.aria-label]="'Order quantity for ' + line.stockItemName"/>
+                                </td>
+                                <td class="num">${{ lineTotal(line).toFixed(2) }}</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">Estimated total: </td>
+                            <td class="num">${{ orderTotal().toFixed(2) }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="dialog-actions">
+                    <button type="button" class="secondary-button">Cancel</button>
+                    <button type="button" class="primary-button">Confirm Order</button>
+                </div>
+            }
+
+            @if (screen === 4) {
+                <div class="banner banner-success">
+                    <strong>Purchase order created</strong>
+                </div>
+                <p><strong>PO number:</strong>&nbsp;{{ poNumber }}</p>
+                <p><strong>Supplier:</strong>&nbsp;{{ order().supplierName }}</p>
+                <p><strong>Order date:</strong>&nbsp;{{ orderDate }}</p>
+                <p><strong>Status:</strong>&nbsp;Open</p>
+                <p><strong>Items:</strong>&nbsp;{{ order().lines.length }}</p>
+                <p><strong>Estimated total:</strong>&nbsp;${{ orderTotal().toFixed(2) }}</p>
+                <p class="hint">A PDF copy of this order was generated and the order is saved as open.</p>
+
+                <div class="dialog-actions">
+                    <button type="button" class="secondary-button">Download PDF</button>
+                    <button type="button" class="primary-button">Done</button>
+                </div>
+            }
+
+            @if (screen === 5) {
+                <div class="banner banner-error">
+                    <strong>Purchase order not created</strong>
+                </div>
+                <p>
+                    The order could not be saved to the database, so no order was created and no PDF was
+                    generated. Your items and quantities are still here.
+                </p>
+                <p>Try again. If this keeps happening, contact your system administrator.</p>
+
+                <div class="dialog-actions">
+                    <button type="button" class="secondary-button">Close</button>
+                    <button type="button" class="primary-button">Try again</button>
+                </div>
+            }
+        </div>
+    </div>
+}

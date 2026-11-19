@@ -1,0 +1,153 @@
+/* leaves room at the bottom of the page so the fixed bar does not cover the table */
+:host {
+  display: block;
+  padding-bottom: 80px;
+}
+
+/* bar fixed to the bottom of the page */
+.summary-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 24px;
+  background: #ffffff;
+  border-top: 1px solid #c9ced6;
+  z-index: 10;
+}
+
+.summary-text {
+  color: #1d2430;
+}
+
+/* buttons */
+.primary-button,
+.secondary-button {
+  padding: 8px 18px;
+  border-radius: 4px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: #1f5fbf;
+  border: 1px solid #1f5fbf;
+  color: #ffffff;
+}
+
+.primary-button:disabled {
+  background: #c9ced6;
+  border-color: #c9ced6;
+  color: #5b6472;
+  cursor: not-allowed;
+}
+
+.secondary-button {
+  background: #ffffff;
+  border: 1px solid #1f5fbf;
+  color: #1f5fbf;
+}
+
+.primary-button:focus-visible,
+.secondary-button:focus-visible,
+.qty-input:focus-visible {
+  outline: 3px solid #f0a030;
+  outline-offset: 2px;
+}
+
+/* pop-up */
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 28, 40, 0.5);
+  z-index: 20;
+}
+
+.dialog {
+  width: 90%;
+  max-width: 760px;
+  max-height: 90vh;
+  overflow: auto;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 8px;
+}
+
+.dialog h2 {
+  margin-top: 0;
+}
+
+.supplier-summary {
+  margin-bottom: 16px;
+}
+
+.supplier-summary p {
+  margin: 4px 0;
+}
+
+.hint {
+  color: #5b6472;
+  font-size: 0.9em;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* table, same look as the other components */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #c9ced6;
+  text-align: left;
+}
+
+.table .num {
+  text-align: right;
+}
+
+.table tfoot td {
+  font-weight: bold;
+  border-bottom: none;
+}
+
+.qty-input {
+  width: 80px;
+  padding: 4px 6px;
+  text-align: right;
+  font: inherit;
+}
+
+/* result banners */
+.banner {
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+}
+
+.banner-success {
+  background: #e3f4e6;
+  border: 1px solid #2f8f46;
+  color: #1c5a2c;
+}
+
+.banner-error {
+  background: #fbe6e6;
+  border: 1px solid #c23b3b;
+  color: #7d1f1f;
+}
